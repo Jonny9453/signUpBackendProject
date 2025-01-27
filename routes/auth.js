@@ -21,8 +21,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // true for port 465, false for other ports
   auth: {
-    user: "sharanmayank5@gmail.com",
-    pass: "roemtafyxcnmrfzf",
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
   connectionTimeout: 10000, // 10 seconds
   greetingTimeout: 10000, // 10 seconds
@@ -74,8 +74,8 @@ function generateOTP() {
       console.log(otpStore)
       // Send OTP via email
     const mailOptions = {
-        from: `"HD Sign Up" <mary.ebert@ethereal.email>`,
-        to: "mayanksharan11@gmail.com",
+        from: `"HD Sign Up" <sharanmayank5@gmail.com>`,
+        to: email,
         subject: 'Verify Your HD Account',
         text:"Hello", 
         html: createEmailTemplate(otp)
