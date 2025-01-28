@@ -7,7 +7,7 @@ router.get('/', verifyToken, (req, res) => {
         return res.status(200).json({verified:true});
     } else {
         // Access Denied
-        return res.status(401).send(error);
+        return res.status(401).send('Access Denied');
     }
 
 });
