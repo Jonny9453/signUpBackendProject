@@ -25,7 +25,7 @@ router.get('/user', async(req, res) => {
     const user =await User.findOne({email});
   
     if (user) {
-      res.json({ data: user.email}); // Send back the protected data
+      res.json({ data: user}); // Send back the protected data
     } else {
       res.status(404).json({ error: 'User not found' }); // Handle user not found
     }
