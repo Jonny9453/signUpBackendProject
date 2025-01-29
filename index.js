@@ -7,7 +7,7 @@ const cors = require('cors'); // Import CORS middleware for handling cross-origi
 const connectDB = require('./connect.js'); // Import database connection function
 const authRoutes = require('./routes/auth'); // Import authentication routes
 const protectedRoute = require('./routes/protectedRoute.js'); // Import protected routes
-const main = require('./server'); // Import main function for sending emails
+
 
 // Initialize the Express application
 const app = express();
