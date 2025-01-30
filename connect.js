@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'); // Import mongoose for MongoDB object modeling
-
+const User= require('./models/User')
 // Function to connect to the MongoDB database
 const connectDB = async () => {
     try {
@@ -9,6 +9,12 @@ const connectDB = async () => {
             useUnifiedTopology: true, // Use the new unified topology layer
         });
         console.log('Connected to MongoDB'); // Log a success message upon successful connection
+         // Update users to add the notes field only if it doesn't exist
+        await User.updateMany(
+            { notes: { $exists: false } }, // Condition to check if notes field does not exist
+            { $set: { notes: [] } } // Set notes to an empty array
+        );
+       
     } catch (err) {
         // Log an error message if the connection fails
         console.error('Could not connect to MongoDB', err);

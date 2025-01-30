@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true }, // Username must be unique and is required
     dateOfBirth: { type: Date, required: true, unique: true }, // Date of birth must be unique and is required
     email: { type: String, unique: true, required: true }, // Email must be unique and is required
+    notes: { type: [String], default: [] },
 });
 
 // Create a User model based on the user schema

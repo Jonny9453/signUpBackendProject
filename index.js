@@ -28,16 +28,7 @@ app.use(express.json());
 // Set up routes
 app.use('/', authRoutes); // Use authentication routes for the root path
 
-// Define a route to handle email sending
-app.get('/app', async (req, res) => {
-  try {
-    const info = await main(); // Call the main function to send an email
-    res.json(info); // Send the response with the email info
-  } catch (error) {
-    console.error('Error sending email:', error); // Log any errors
-    res.status(500).json({ error: 'Failed to send email. Please try again later.' }); // Send error response
-  }
-});
+
 
 // Use protected routes for the '/protected' path
 app.use('/protected', protectedRoute);

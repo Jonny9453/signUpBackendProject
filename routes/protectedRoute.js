@@ -31,4 +31,54 @@ router.get('/user', async(req, res) => {
     }
   });
 
+  router.post('/addNotes', async(req, res) => {
+    const email = req.query.email; // Get the email from the query parameters
+    const notes=req.body;
+    console.log(notes)
+   console.log(email)
+   try{
+
+   
+    // Find the user by email
+    const user =await User.findOne({email});
+  
+
+    if (user) {
+      user.notes.push(notes.note);
+      await user.save();
+      res.json({message: 'Note added successfully', data: user});
+    } else {
+      res.status(404).json({ error: 'User not found' }); // Handle user not found
+    }
+  }catch(error){
+    res.status(500).json({error:error})
+  }
+  });
+  router.post('/deleteNotes',async(req,res)=>{
+    const {email, index}=req.body;
+    console.log("mayank")
+    try {
+        const user = await User.findOne({ email });
+        console.log(user)
+        if (user) {
+          // Check if the index is valid
+          if (index >= 0 && index < user.notes.length) {
+            user.notes.splice(index, 1); // Remove the note at the specified index
+            await user.save(); // Save the updated user document
+    
+            res.json({ message: 'Note removed successfully', data: user }); // Send back the updated user data
+          } else {
+            res.status(400).json({ error: 'Invalid index' }); // Handle invalid index
+          }
+        } else {
+          res.status(404).json({ error: 'User not found' }); // Handle user not found
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'Internal server error' }); // Handle server errors
+      }
+
+  })
+
+
+
 module.exports = router;
