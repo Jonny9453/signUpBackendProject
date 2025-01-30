@@ -32,7 +32,7 @@ app.use('/', authRoutes); // Use authentication routes for the root path
 
 // Use protected routes for the '/protected' path
 app.use('/protected', protectedRoute);
-
+   
 // Set the port for the server to listen on
 const PORT = process.env.PORT || 3000; // Use the port from environment variables or default to 3000
 
