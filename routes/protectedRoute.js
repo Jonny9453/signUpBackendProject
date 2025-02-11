@@ -32,7 +32,7 @@ router.get('/user', async(req, res) => {
     }
   });
 
-  router.post('/addNotes', async(req, res) => {
+  router.post('/addEvent', async(req, res) => {
     const email = req.query.email; // Get the email from the query parameters
     const {title, description, date }=req.body;
     
@@ -67,7 +67,7 @@ router.get('/user', async(req, res) => {
     res.status(500).json({error:error})
   }
   });
-  router.post('/deleteNotes',async(req,res)=>{
+  router.post('/deleteEvent',async(req,res)=>{
     const {email, index}=req.body;
     console.log("mayank")
     try {
