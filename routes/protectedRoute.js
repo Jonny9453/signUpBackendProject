@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware');
-const User=require('../models/User')
+const {User, Event}=require('../models/User')
+
 // Protected route
 router.get('/', verifyToken, (req, res) => {
     if (req.verified) {
@@ -33,23 +34,35 @@ router.get('/user', async(req, res) => {
 
   router.post('/addNotes', async(req, res) => {
     const email = req.query.email; // Get the email from the query parameters
-    const notes=req.body;
-    console.log(notes)
-   console.log(email)
+    const {title, description, date }=req.body;
+    
+   console.log(title)
    try{
 
    
     // Find the user by email
     const user =await User.findOne({email});
-  
-
-    if (user) {
-      user.notes.push(notes.note);
-      await user.save();
-      res.json({message: 'Note added successfully', data: user});
-    } else {
-      res.status(404).json({ error: 'User not found' }); // Handle user not found
+  console.log("mayayayyaay",user)
+    const emails=user.email
+    console.log("mayayayyaay", emails)
+    if(user.email){
+      const event = new Event({emails, title, description, date});
+      user.notes.push({emails, title, description, date});
+        console.log(user)
+        await user.save();
+    await event.save();
+    res.json({message: 'Note added successfully', data: event});
+    } else{
+      res.status(404).json({ error: 'User not found' });
     }
+    // if (user) {
+    //   user.notes.push(body);
+    //   console.log(user)
+    //   await user.save();
+    //   res.json({message: 'Note added successfully', data: user});
+    // } else {
+    //   res.status(404).json({ error: 'User not found' }); // Handle user not found
+    // }
   }catch(error){
     res.status(500).json({error:error})
   }

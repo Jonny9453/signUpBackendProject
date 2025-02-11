@@ -7,7 +7,7 @@ const cors = require('cors'); // Import CORS middleware for handling cross-origi
 const connectDB = require('./connect.js'); // Import database connection function
 const authRoutes = require('./routes/auth'); // Import authentication routes
 const protectedRoute = require('./routes/protectedRoute.js'); // Import protected routes
-
+const {Event}=require('./models/User')
 
 // Initialize the Express application
 const app = express();
@@ -24,11 +24,22 @@ app.use(cors({
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
-
+     
 // Set up routes
 app.use('/', authRoutes); // Use authentication routes for the root path
 
-
+app.get('/events',async(req,res)=>{
+  
+   
+    // Find the user by email
+    const events = await Event.find();
+  console.log(events)
+    if (events) {
+      res.json({ data: events}); 
+    } else {
+      res.status(404).json({ error: 'events not found' }); // Handle events not found
+    }
+})
 
 // Use protected routes for the '/protected' path
 app.use('/protected', protectedRoute);

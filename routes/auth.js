@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
  const router = express.Router();
- const User = require('../models/User');
+ const {User} = require('../models/User');
  const nodemailer = require('nodemailer');
 //  const bcrypt = require('bcrypt');
  const jwt = require('jsonwebtoken');
@@ -74,9 +74,9 @@ function generateOTP() {
       console.log(otpStore)
       // Send OTP via email
     const mailOptions = {
-        from: `"HD Sign Up" <sharanmayank5@gmail.com>`,
+        from: `"EM Sign Up" <sharanmayank5@gmail.com>`,
         to: email,
-        subject: 'Verify Your HD Account',
+        subject: 'Verify Your EM Account',
         text:"Hello", 
         html: createEmailTemplate(otp)
       };
@@ -162,9 +162,9 @@ router.post('/registration/verify', async(req, res) => {
     console.log(otpStore)
     // Send OTP via email
   const mailOptions = {
-      from: `"HD Sign Up" <mary.ebert@ethereal.email>`,
-      to: "mayanksharan11@gmail.com",
-      subject: 'Verify Your HD Account',
+      from: `"EM Sign Up" <mary.ebert@ethereal.email>`,
+      to: email,
+      subject: 'Verify Your EM Account',
       text:"Hello", 
       html: createEmailTemplate(otp)
     };
