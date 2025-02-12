@@ -17,7 +17,7 @@ const http = require('http').Server(app);
 
 const socketIO = require('socket.io')(http, {
   cors: {
-      origin: "http://localhost:5173"
+      origin: "https://project-tawny-theta.vercel.app/"
   }
 });
 // Connect to the database
