@@ -34,7 +34,7 @@ router.get('/user', async(req, res) => {
 
   router.post('/addEvent', async(req, res) => {
     const email = req.query.email; // Get the email from the query parameters
-    const {title, description, date }=req.body;
+    const {title, description, date,location, category }=req.body;
     
    console.log(title)
    try{
@@ -46,8 +46,8 @@ router.get('/user', async(req, res) => {
     const emails=user.email
     console.log("mayayayyaay", emails)
     if(user.email){
-      const event = new Event({emails, title, description, date});
-      user.notes.push({emails, title, description, date});
+      const event = new Event({emails, title, description, date, location, category});
+      user.notes.push({emails, title, description, date, location, category});
         console.log(user)
         await user.save();
     await event.save();

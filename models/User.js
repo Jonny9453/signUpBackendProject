@@ -14,8 +14,8 @@ const eventSchema = new mongoose.Schema({
     description: String,
     date: { type: Date, required: true },
     attendees: [{ type: String, ref: 'User' }],
-    // location: String,
-    // category: String,
+    location: String,
+    category: String,
     // owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     // attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // createdAt: { type: Date, default: Date.now }
