@@ -9,9 +9,17 @@ const authRoutes = require('./routes/auth'); // Import authentication routes
 const protectedRoute = require('./routes/protectedRoute.js'); // Import protected routes
 const {Event}=require('./models/User')
 
+
 // Initialize the Express application
 const app = express();
+const http = require('http').Server(app);
 
+
+const socketIO = require('socket.io')(http, {
+  cors: {
+      origin: "http://localhost:5173"
+  }
+});
 // Connect to the database
 connectDB();
 
@@ -24,7 +32,32 @@ app.use(cors({
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
-     
+  
+socketIO.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+  socket.on('add', async(data) => {
+    const event = await Event.findOne({ _id: data.id });
+    console.log("mayayayyaay",event)
+    
+    
+    if(event){
+      
+      event.attendees.push(data.email);
+        
+      await event.save();
+      const events = await Event.find()
+      socketIO.emit('jointResponse', events);
+    
+    } else{
+      console.log("event not found")
+    }
+    console.log(data);
+  });
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+  });
+});
+
 // Set up routes
 app.use('/', authRoutes); // Use authentication routes for the root path
 
@@ -48,6 +81,6 @@ app.use('/protected', protectedRoute);
 const PORT = process.env.PORT || 3000; // Use the port from environment variables or default to 3000
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`); // Log a message indicating the server is running
 });

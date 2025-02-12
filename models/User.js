@@ -13,6 +13,7 @@ const eventSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: String,
     date: { type: Date, required: true },
+    attendees: [{ type: String, ref: 'User' }],
     // location: String,
     // category: String,
     // owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
